@@ -1,4 +1,4 @@
-require(["esri/map", "esri/geometry/Extent", "esri/layers/FeatureLayer","esri/layers/ArcGISDynamicMapServiceLayer", "dojo/domReady!"], function (Map, Extent, FeatureLayer, ArcGISDynamicMapServiceLayer) {
+require(["esri/map", "esri/geometry/Extent", "esri/layers/FeatureLayer","esri/layers/ArcGISDynamicMapServiceLayer", "esri/dijit/BasemapToggle", "dojo/domReady!"], function (Map, Extent, FeatureLayer, ArcGISDynamicMapServiceLayer, BasemapToggle) {
     var sanfrancisco =  new Extent(
         {
             xmin: -13681103.419777958,
@@ -21,5 +21,13 @@ require(["esri/map", "esri/geometry/Extent", "esri/layers/FeatureLayer","esri/la
     // Que capas se muestran ( sin añadir un filtro al servicio )
     ciudades.setVisibleLayers([0, 2, 3]);
     var terremotos  = new FeatureLayer("http://services.arcgis.com/ue9rwulIoeLEI9bj/arcgis/rest/services/Earthquakes/FeatureServer/0");
+    terremotos.setDefinitionExpression("MAGNITUDE > 2")
     myMap.addLayers([ciudades, terremotos]);
+    var basemapToggle = new BasemapToggle({
+        map: myMap,
+        visible: true,
+        basemap: "hybrid"
+      }, "togepi");
+      basemapToggle.startup();
+      basemapToggle.show(); 
 });
